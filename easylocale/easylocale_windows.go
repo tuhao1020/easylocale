@@ -1,15 +1,9 @@
 package easylocale
 
-import (
-	"fmt"
-	"golang.org/x/sys/windows"
-	"unsafe"
-)
-
 const (
 	nameMaxLength = 85
-	nullptr = 0
-	dllName = "kernel32"
+	nullptr       = 0
+	dllName       = "kernel32"
 )
 
 var procNames = []string{"GetUserDefaultLocaleName", "GetSystemDefaultLocaleName"}
@@ -27,9 +21,10 @@ func getWindowsLocaleFromProc(procName string) (string, error) {
 	return windows.UTF16ToString(buffer), nil
 }
 
+// CurrentLocale get locale through system call
 func CurrentLocale() (string, error) {
 	var locale string
-	var err    error
+	var err error
 
 	for _, proc := range procNames {
 		locale, err = getWindowsLocaleFromProc(proc)
