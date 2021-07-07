@@ -1,41 +1,25 @@
 package easylocale
 
 import (
-	"fmt"
-	"golang.org/x/sys/windows"
-	"unsafe"
+	"errors"
+	"os"
 )
 
-const (
-	nameMaxLength = 85
-	nullptr = 0
-	dllName = "kernel32"
-)
-
-var procNames = []string{"GetUserDefaultLocaleName", "GetSystemDefaultLocaleName"}
-
-func getWindowsLocaleFromProc(procName string) (string, error) {
-	dll := windows.MustLoadDLL(dllName)
-	proc := dll.MustFindProc(procName)
-
-	buffer := make([]uint16, nameMaxLength)
-	r, _, err := proc.Call(uintptr(unsafe.Pointer(&buffer[0])), uintptr(nameMaxLength))
-	if r == nullptr {
-		return "", fmt.Errorf("invoke %s: %v", procName, err)
-	}
-
-	return windows.UTF16ToString(buffer), nil
-}
+var langEnv = []string{"LC_ALL", "LANG"}
 
 func CurrentLocale() (string, error) {
 	var locale string
-	var err    error
 
-	for _, proc := range procNames {
-		locale, err = getWindowsLocaleFromProc(proc)
-		if err != nil {
-			continue
+	for _, env := range langEnv {
+		locale = os.Getenv(env)
+		if locale != "" {
+			return localle, nil
 		}
+	}
+
+	var err error
+	if locale == "" {
+		err = errors.New("can't detect locale info from environment")
 	}
 
 	return locale, err
