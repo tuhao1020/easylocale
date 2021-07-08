@@ -1,6 +1,8 @@
 package easylocale
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestCurrentLocale(t *testing.T) {
 	t.Parallel()

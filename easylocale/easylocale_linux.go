@@ -1,19 +1,17 @@
 package easylocale
 
-import (
-	"errors"
-	"os"
-)
+import "strings"
 
 var langEnv = []string{"LC_ALL", "LANG"}
 
+// CurrentLocale get locale from environment
 func CurrentLocale() (string, error) {
 	var locale string
 
 	for _, env := range langEnv {
 		locale = os.Getenv(env)
 		if locale != "" {
-			return localle, nil
+			return strings.Split(locale, ".")[0], nil
 		}
 	}
 
