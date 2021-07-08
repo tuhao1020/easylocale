@@ -13,7 +13,7 @@ func CurrentLocale() (string, error) {
 		return "", err
 	}
 
-	return strings.TrimSpace(string(output)), nil
+	return strings.ReplaceAll(strings.TrimSpace(string(output)), "_", "-"), nil
 }
 
 // MustCurrentLocale get locale through system call, panic if failed

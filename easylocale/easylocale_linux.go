@@ -10,17 +10,16 @@ func CurrentLocale() (string, error) {
 
 	for _, env := range langEnv {
 		locale = os.Getenv(env)
-		if locale != "" {
-			return strings.Split(locale, ".")[0], nil
+		if locale == "" {
+			continue
 		}
 	}
 
-	var err error
 	if locale == "" {
-		err = errors.New("can't detect locale info from environment")
+		return "", errors.New("can't detect locale info from environment")
 	}
 
-	return locale, err
+	return strings.ReplaceAll(strings.Split(locale, ".")[0], "_", "-"), nil
 }
 
 // MustCurrentLocale get locale through system call, panic if failed
