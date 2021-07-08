@@ -22,3 +22,12 @@ func CurrentLocale() (string, error) {
 
 	return locale, err
 }
+
+// MustCurrentLocale get locale through system call, panic if failed
+func MustCurrentLocale() string {
+	locale, err := CurrentLocale()
+	if err != nil {
+		panic(err)
+	}
+	return locale
+}

@@ -15,3 +15,12 @@ func CurrentLocale() (string, error) {
 
 	return strings.TrimSpace(string(output)), nil
 }
+
+// MustCurrentLocale get locale through system call, panic if failed
+func MustCurrentLocale() string {
+	locale, err := CurrentLocale()
+	if err != nil {
+		panic(err)
+	}
+	return locale
+}
