@@ -1,5 +1,11 @@
 package easylocale
 
+import (
+	"fmt"
+	"golang.org/x/sys/windows"
+	"unsafe"
+)
+
 const (
 	nameMaxLength = 85
 	nullptr       = 0
@@ -34,4 +40,13 @@ func CurrentLocale() (string, error) {
 	}
 
 	return locale, err
+}
+
+// MustCurrentLocale get locale through system call, panic if failed
+func MustCurrentLocale() string {
+	locale, err := CurrentLocale()
+	if err != nil {
+		panic(err)
+	}
+	return locale
 }
