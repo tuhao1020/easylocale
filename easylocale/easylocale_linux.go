@@ -1,6 +1,9 @@
 package easylocale
 
-import "strings"
+import (
+	"os"
+	"strings"
+)
 
 var langEnv = []string{"LC_ALL", "LANG"}
 
