@@ -1,6 +1,7 @@
 package easylocale
 
 import (
+	"errors"
 	"os"
 	"strings"
 )
